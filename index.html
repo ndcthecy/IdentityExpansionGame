@@ -1,0 +1,1824 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>恒等式星際防衛戰｜香港中二數學特訓</title>
+    <!-- 引入 Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 引入 Google Fonts (Noto Sans TC 繁體中文 & Crimson Pro 數學字體) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,600;0,700;1,600;1,700&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        /* 自訂基礎字體與夢幻星際極光背景 */
+        body {
+            font-family: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: radial-gradient(ellipse at top, #1b1448 0%, #0b1128 48%, #040714 100%);
+            color: #f8fafc;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* 數學算式專用排版，還原教科書級別的清晰美感 */
+        .math-expr {
+            font-family: 'Crimson Pro', 'Times New Roman', Georgia, serif;
+            letter-spacing: 0.03em;
+        }
+
+        .math-var {
+            font-style: italic;
+            padding-right: 1px;
+        }
+
+        .math-sup {
+            font-size: 0.68em;
+            vertical-align: super;
+            line-height: 0;
+            font-style: normal;
+            margin-left: 1px;
+        }
+
+        /* 多層次閃爍星空與細緻網格背景 */
+        .star-bg {
+            background-image: 
+                radial-gradient(1.5px 1.5px at 24px 36px, rgba(255,255,255,0.55), rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 140px 80px, rgba(165,180,252,0.55), rgba(0,0,0,0)),
+                radial-gradient(1.5px 1.5px at 260px 150px, rgba(103,232,249,0.5), rgba(0,0,0,0)),
+                radial-gradient(2.5px 2.5px at 340px 40px, rgba(244,114,182,0.45), rgba(0,0,0,0)),
+                radial-gradient(1px 1px at 90px 180px, rgba(253,224,71,0.45), rgba(0,0,0,0)),
+                linear-gradient(to right, rgba(99, 102, 241, 0.04) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(99, 102, 241, 0.04) 1px, transparent 1px);
+            background-size: 420px 240px, 420px 240px, 420px 240px, 420px 240px, 420px 240px, 56px 56px, 56px 56px;
+            animation: starDrift 70s linear infinite;
+        }
+
+        @keyframes starDrift {
+            from { background-position: 0 0, 0 0, 0 0, 0 0, 0 0, 0 0, 0 0; }
+            to { background-position: 420px 240px, 420px 240px, 420px 240px, 420px 240px, 420px 240px, 56px 56px, 56px 56px; }
+        }
+
+        /* 極光星雲呼吸漂浮動畫 */
+        @keyframes auroraFloat {
+            0%, 100% { transform: translate(0px, 0px) scale(1); opacity: 0.55; }
+            33% { transform: translate(28px, -22px) scale(1.08); opacity: 0.72; }
+            66% { transform: translate(-22px, 18px) scale(0.95); opacity: 0.48; }
+        }
+
+        .aurora-orb {
+            animation: auroraFloat 16s ease-in-out infinite;
+        }
+
+        /* 背景微光數學符號緩慢飄動 */
+        @keyframes symbolDrift {
+            0%, 100% { transform: translateY(0px) rotate(-4deg); }
+            50% { transform: translateY(-16px) rotate(4deg); }
+        }
+
+        .bg-math-symbol {
+            animation: symbolDrift 9s ease-in-out infinite;
+        }
+
+        /* 遊戲互動動畫 */
+        @keyframes shakeError {
+            0%, 100% { transform: translateX(0); }
+            20% { transform: translateX(-8px); }
+            40% { transform: translateX(8px); }
+            60% { transform: translateX(-5px); }
+            80% { transform: translateX(5px); }
+        }
+
+        .animate-shake {
+            animation: shakeError 0.42s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+        }
+
+        @keyframes popSuccess {
+            0% { transform: scale(0.95); }
+            50% { transform: scale(1.03); }
+            100% { transform: scale(1); }
+        }
+
+        .animate-pop {
+            animation: popSuccess 0.3s ease-out forwards;
+        }
+
+        @keyframes floatSlow {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-6px); }
+        }
+
+        .animate-float {
+            animation: floatSlow 3.5s ease-in-out infinite;
+        }
+
+        /* Fever 連擊熾熱邊框效果 */
+        .fever-glow {
+            box-shadow: 0 0 28px rgba(251, 191, 36, 0.38), inset 0 0 18px rgba(245, 158, 11, 0.18);
+            border-color: rgba(251, 191, 36, 0.75) !important;
+        }
+
+        /* 拔河猛拉與角色發力動畫 */
+        @keyframes tugPulseLeft {
+            0% { transform: scale(1); }
+            40% { transform: translateX(-8px) scale(1.04); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes tugPulseRight {
+            0% { transform: scale(1); }
+            40% { transform: translateX(8px) scale(1.04); }
+            100% { transform: scale(1); }
+        }
+
+        .animate-pull-left {
+            animation: tugPulseLeft 0.35s ease-out;
+        }
+
+        .animate-pull-right {
+            animation: tugPulseRight 0.35s ease-out;
+        }
+
+        /* 選項按鈕立體質感 */
+        .option-btn {
+            transition: all 0.18s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 0 rgba(15, 23, 42, 0.7);
+        }
+
+        .option-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 0 rgba(15, 23, 42, 0.8), 0 0 16px rgba(99, 102, 241, 0.35);
+        }
+
+        .option-btn:active:not(:disabled) {
+            transform: translateY(2px);
+            box-shadow: 0 2px 0 rgba(15, 23, 42, 0.8);
+        }
+
+        /* 自訂捲軸 */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(15, 23, 42, 0.5);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(99, 102, 241, 0.5);
+            border-radius: 9999px;
+        }
+    </style>
+</head>
+<body class="star-bg flex flex-col justify-between selection:bg-indigo-500 selection:text-white relative">
+
+    <!-- 夢幻星際極光與幾何光暈裝飾背景層 -->
+    <div aria-hidden="true" class="fixed inset-0 -z-10 overflow-hidden pointer-events-none select-none">
+        <!-- 左側藍隊星雲光暈 -->
+        <div class="aurora-orb absolute -top-24 -left-24 w-[28rem] h-[28rem] rounded-full bg-cyan-500/20 blur-[120px]"></div>
+        <!-- 右側紅隊星雲光暈 -->
+        <div class="aurora-orb absolute -top-20 -right-24 w-[28rem] h-[28rem] rounded-full bg-rose-500/20 blur-[120px]" style="animation-delay: -5s;"></div>
+        <!-- 中央深邃紫羅蘭極光帶 -->
+        <div class="aurora-orb absolute top-1/3 left-1/2 -translate-x-1/2 w-[42rem] h-[24rem] rounded-full bg-indigo-600/20 blur-[135px]" style="animation-delay: -10s;"></div>
+        <!-- 底部暖金星塵微光 -->
+        <div class="aurora-orb absolute -bottom-28 left-1/3 w-[32rem] h-[22rem] rounded-full bg-amber-500/10 blur-[120px]" style="animation-delay: -7s;"></div>
+
+        <!-- 若隱若現的漂浮代數恒等式背景裝飾 -->
+        <div class="bg-math-symbol math-expr absolute top-24 left-[7%] text-cyan-300/10 text-3xl sm:text-5xl font-bold">
+            (a + b)² ≡ a² + 2ab + b²
+        </div>
+        <div class="bg-math-symbol math-expr absolute bottom-20 right-[6%] text-rose-300/10 text-3xl sm:text-5xl font-bold" style="animation-delay: -4s;">
+            (a + b)(a − b) ≡ a² − b²
+        </div>
+        <div class="bg-math-symbol math-expr hidden md:block absolute top-1/2 left-[4%] text-purple-300/10 text-2xl sm:text-4xl font-bold" style="animation-delay: -2s;">
+            (a − b)²
+        </div>
+        <div class="bg-math-symbol math-expr hidden md:block absolute top-1/3 right-[5%] text-amber-300/10 text-2xl sm:text-4xl font-bold" style="animation-delay: -6s;">
+            ± 2ab
+        </div>
+    </div>
+
+    <!-- 頂部導覽列 -->
+    <header class="w-full border-b border-slate-800/80 bg-slate-950/75 backdrop-blur-md sticky top-0 z-30">
+        <div class="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between gap-2">
+            <!-- 品牌與標題 -->
+            <div class="flex items-center gap-2.5 cursor-pointer" onclick="returnToMenu()">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 flex items-center justify-center shadow-lg shadow-indigo-500/30 font-black text-lg text-white">
+                    (a±b)²
+                </div>
+                <div>
+                    <div class="flex items-center gap-2">
+                        <h1 class="font-bold text-base sm:text-lg tracking-wide text-white">恒等式星際拔河戰</h1>
+                        <span class="hidden sm:inline-block text-xs font-semibold px-2 py-0.5 rounded-full bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">
+                            HK 中二數學・雙隊對戰
+                        </span>
+                    </div>
+                    <p class="text-xs text-slate-400 hidden sm:block">左右兩組拔河競速｜完全平方公式 &amp; 平方差公式</p>
+                </div>
+            </div>
+
+            <!-- 功能按鈕區 -->
+            <div class="flex items-center gap-2">
+                <!-- 公式錦囊按鈕 -->
+                <button onclick="toggleFormulaModal(true)" class="px-3 py-2 rounded-xl bg-amber-500/15 hover:bg-amber-500/25 text-amber-300 border border-amber-500/40 text-xs sm:text-sm font-bold flex items-center gap-1.5 transition">
+                    <span>📖</span>
+                    <span>公式錦囊</span>
+                </button>
+                <!-- 音效開關 -->
+                <button id="soundToggleBtn" onclick="toggleSound()" class="p-2 rounded-xl bg-slate-800/80 hover:bg-slate-700 text-slate-200 border border-slate-700 transition" title="切換音效">
+                    <span id="soundIcon">🔊</span>
+                </button>
+                <!-- 返回主頁按鈕（遊戲進行中顯示） -->
+                <button id="quitGameBtn" onclick="returnToMenu()" class="hidden px-3 py-2 rounded-xl bg-slate-800/80 hover:bg-rose-500/20 hover:text-rose-300 hover:border-rose-500/40 text-slate-300 border border-slate-700 text-xs sm:text-sm font-medium transition">
+                    退出
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- 主內容容器 -->
+    <main class="flex-1 w-full max-w-6xl mx-auto px-3 sm:px-5 py-4 sm:py-5 flex flex-col justify-center">
+
+        <!-- ==================== 畫面 1：主選單與關卡選擇 ==================== -->
+        <section id="menuScreen" class="space-y-5">
+            <!-- 歡迎橫幅 -->
+            <div class="text-center space-y-2 py-1">
+                <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-indigo-500/15 border border-indigo-400/30 text-indigo-300 text-xs font-bold mb-1">
+                    <span>🪢</span>
+                    <span>中二代數核心課題：左右兩組拔河對戰模式</span>
+                </div>
+                <h2 class="text-2xl sm:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-white to-rose-300">
+                    藍隊 VS 紅隊！展開恒等式拔河大決戰
+                </h2>
+                <p class="text-slate-300 text-sm sm:text-base max-w-2xl mx-auto">
+                    每答對一題即可將中央能量繩拉向己方陣地，連擊更能發動<span class="text-amber-300 font-bold">「暴擊猛拉」</span>！率先將旗幟拉過勝利線的一隊獲勝！
+                </p>
+            </div>
+
+            <!-- 三大恒等式速覽卡片 -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                <!-- 公式 1：完全平方和 -->
+                <div class="rounded-2xl bg-slate-900/75 border border-cyan-500/30 p-3.5 backdrop-blur-sm hover:border-cyan-400/60 transition">
+                    <div class="flex items-center justify-between mb-1">
+                        <span class="text-xs font-bold px-2.5 py-0.5 rounded-md bg-cyan-500/20 text-cyan-300">完全平方公式 (和)</span>
+                        <span class="text-xs text-slate-400">全正號</span>
+                    </div>
+                    <div class="math-expr text-xl sm:text-2xl font-bold text-center py-1.5 text-white">
+                        (<span class="text-cyan-300 math-var">a</span> + <span class="text-pink-300 math-var">b</span>)<span class="math-sup">2</span> ≡ <span class="text-cyan-300 math-var">a</span><span class="math-sup">2</span> + 2<span class="text-cyan-300 math-var">a</span><span class="text-pink-300 math-var">b</span> + <span class="text-pink-300 math-var">b</span><span class="math-sup">2</span>
+                    </div>
+                    <p class="text-xs text-slate-400 text-center">⚠️ 切記中間有 <span class="text-amber-300 font-bold">+ 2ab</span>，不要漏掉！</p>
+                </div>
+
+                <!-- 公式 2：完全平方差 -->
+                <div class="rounded-2xl bg-slate-900/75 border border-purple-500/30 p-3.5 backdrop-blur-sm hover:border-purple-400/60 transition">
+                    <div class="flex items-center justify-between mb-1">
+                        <span class="text-xs font-bold px-2.5 py-0.5 rounded-md bg-purple-500/20 text-purple-300">完全平方公式 (差)</span>
+                        <span class="text-xs text-slate-400">前減後加</span>
+                    </div>
+                    <div class="math-expr text-xl sm:text-2xl font-bold text-center py-1.5 text-white">
+                        (<span class="text-cyan-300 math-var">a</span> − <span class="text-pink-300 math-var">b</span>)<span class="math-sup">2</span> ≡ <span class="text-cyan-300 math-var">a</span><span class="math-sup">2</span> − 2<span class="text-cyan-300 math-var">a</span><span class="text-pink-300 math-var">b</span> + <span class="text-pink-300 math-var">b</span><span class="math-sup">2</span>
+                    </div>
+                    <p class="text-xs text-slate-400 text-center">⚠️ 尾項 <span class="text-amber-300 font-bold">+ b²</span> 永遠是正數！</p>
+                </div>
+
+                <!-- 公式 3：平方差 -->
+                <div class="rounded-2xl bg-slate-900/75 border border-pink-500/30 p-3.5 backdrop-blur-sm hover:border-pink-400/60 transition">
+                    <div class="flex items-center justify-between mb-1">
+                        <span class="text-xs font-bold px-2.5 py-0.5 rounded-md bg-pink-500/20 text-pink-300">平方差公式</span>
+                        <span class="text-xs text-slate-400">兩項式</span>
+                    </div>
+                    <div class="math-expr text-xl sm:text-2xl font-bold text-center py-1.5 text-white">
+                        (<span class="text-cyan-300 math-var">a</span> + <span class="text-pink-300 math-var">b</span>)(<span class="text-cyan-300 math-var">a</span> − <span class="text-pink-300 math-var">b</span>) ≡ <span class="text-cyan-300 math-var">a</span><span class="math-sup">2</span> − <span class="math-sup">b</span><span class="math-sup">2</span>
+                    </div>
+                    <p class="text-xs text-slate-400 text-center">⚠️ 中間項抵消，結果是 <span class="text-amber-300 font-bold">a² 減 b²</span>！</p>
+                </div>
+            </div>
+
+            <!-- 對戰模式與隊名設定列 -->
+            <div class="rounded-2xl bg-slate-900/80 border border-slate-800 p-4 flex flex-col lg:flex-row items-center justify-between gap-4">
+                <!-- 模式切換 -->
+                <div class="flex flex-wrap items-center gap-2">
+                    <span class="text-xs font-bold text-slate-400 mr-1">對戰形式：</span>
+                    <button id="battleTypePvpBtn" onclick="setBattleType('pvp')" class="px-3.5 py-2 rounded-xl bg-indigo-600 text-white border border-indigo-400 text-xs sm:text-sm font-bold flex items-center gap-1.5 shadow-md transition">
+                        <span>👥</span>
+                        <span>雙隊同屏拔河 (藍隊 vs 紅隊)</span>
+                    </button>
+                    <button id="battleTypeAiBtn" onclick="setBattleType('ai')" class="px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 text-xs sm:text-sm font-bold flex items-center gap-1.5 transition">
+                        <span>🤖</span>
+                        <span>單人挑戰 AI 電腦</span>
+                    </button>
+                </div>
+
+                <!-- 自訂左右隊伍名稱 -->
+                <div class="flex flex-wrap items-center gap-2 text-xs sm:text-sm">
+                    <div class="flex items-center gap-1.5 bg-cyan-950/50 border border-cyan-500/40 rounded-xl px-2.5 py-1.5">
+                        <span class="w-2.5 h-2.5 rounded-full bg-cyan-400"></span>
+                        <label for="leftTeamNameInput" class="text-cyan-300 font-bold">左方：</label>
+                        <input id="leftTeamNameInput" type="text" value="藍隊" maxlength="8" class="w-20 bg-transparent text-white font-bold focus:outline-none border-b border-cyan-500/40 focus:border-cyan-300 text-center">
+                    </div>
+                    <span class="font-black text-slate-500">VS</span>
+                    <div class="flex items-center gap-1.5 bg-rose-950/50 border border-rose-500/40 rounded-xl px-2.5 py-1.5">
+                        <span class="w-2.5 h-2.5 rounded-full bg-rose-400"></span>
+                        <label for="rightTeamNameInput" class="text-rose-300 font-bold">右方：</label>
+                        <input id="rightTeamNameInput" type="text" value="紅隊" maxlength="8" class="w-20 bg-transparent text-white font-bold focus:outline-none border-b border-rose-500/40 focus:border-rose-300 text-center">
+                    </div>
+                </div>
+            </div>
+
+            <!-- 關卡難度選擇 -->
+            <div class="space-y-2.5">
+                <div class="flex items-center justify-between">
+                    <h3 class="text-base sm:text-lg font-bold text-white flex items-center gap-2">
+                        <span>🎮</span>
+                        <span>選擇題庫難度並開始拔河</span>
+                    </h3>
+                    <span class="text-xs text-slate-400 hidden sm:inline">💡 支援雙人同屏觸控／滑鼠，或鍵盤 [1-4] 對戰 [7-0]</span>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5">
+                    <!-- 難度 1：初級 -->
+                    <button onclick="startTugGame('easy')" class="group text-left rounded-2xl bg-gradient-to-b from-emerald-900/45 to-slate-900/85 backdrop-blur-md border border-emerald-500/40 hover:border-emerald-400 p-4 transition-all hover:-translate-y-1 shadow-lg">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-2xl">🌱</span>
+                            <span class="text-xs font-bold px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300">♾️ 不限時對決</span>
+                        </div>
+                        <h4 class="text-base sm:text-lg font-bold text-white group-hover:text-emerald-300 transition">初級・基礎入門</h4>
+                        <p class="text-xs text-slate-300 mt-1 leading-relaxed">未知數係數為 1，快速建立公式反應。</p>
+                        <div class="mt-2.5 pt-2 border-t border-slate-800 text-xs text-emerald-300/90 math-expr">
+                            例：(x + 4)<span class="math-sup">2</span> , (y − 5)(y + 5)
+                        </div>
+                    </button>
+
+                    <!-- 難度 2：中級 -->
+                    <button onclick="startTugGame('medium')" class="group text-left rounded-2xl bg-gradient-to-b from-indigo-900/50 to-slate-900/85 backdrop-blur-md border border-indigo-500/40 hover:border-indigo-400 p-4 transition-all hover:-translate-y-1 shadow-lg">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-2xl">⚡</span>
+                            <span class="text-xs font-bold px-2.5 py-0.5 rounded-full bg-indigo-500/20 text-indigo-300">♾️ 不限時對決</span>
+                        </div>
+                        <h4 class="text-base sm:text-lg font-bold text-white group-hover:text-indigo-300 transition">中級・進階挑戰</h4>
+                        <p class="text-xs text-slate-300 mt-1 leading-relaxed">加入未知數係數與倒序排列，考驗細心度。</p>
+                        <div class="mt-2.5 pt-2 border-t border-slate-800 text-xs text-indigo-300/90 math-expr">
+                            例：(2x − 3)<span class="math-sup">2</span> , (5 − 3a)(5 + 3a)
+                        </div>
+                    </button>
+
+                    <!-- 難度 3：高級 -->
+                    <button onclick="startTugGame('hard')" class="group text-left rounded-2xl bg-gradient-to-b from-rose-900/50 to-slate-900/85 backdrop-blur-md border border-rose-500/40 hover:border-rose-400 p-4 transition-all hover:-translate-y-1 shadow-lg">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-2xl">🔥</span>
+                            <span class="text-xs font-bold px-2.5 py-0.5 rounded-full bg-rose-500/20 text-rose-300">♾️ 不限時對決</span>
+                        </div>
+                        <h4 class="text-base sm:text-lg font-bold text-white group-hover:text-rose-300 transition">高級・大師試煉</h4>
+                        <p class="text-xs text-slate-300 mt-1 leading-relaxed">雙變數多項式與變式排列，高手過招！</p>
+                        <div class="mt-2.5 pt-2 border-t border-slate-800 text-xs text-rose-300/90 math-expr">
+                            例：(3x + 2y)<span class="math-sup">2</span> , (4b − 5a)(5a + 4b)
+                        </div>
+                    </button>
+
+                    <!-- 難度 4：綜合混戰 -->
+                    <button onclick="startTugGame('mixed')" class="group text-left rounded-2xl bg-gradient-to-b from-amber-900/50 to-slate-900/85 backdrop-blur-md border border-amber-500/40 hover:border-amber-400 p-4 transition-all hover:-translate-y-1 shadow-lg">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-2xl">🌌</span>
+                            <span class="text-xs font-bold px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-300">全難度混合</span>
+                        </div>
+                        <h4 class="text-base sm:text-lg font-bold text-white group-hover:text-amber-300 transition">全能星際爭霸戰</h4>
+                        <p class="text-xs text-slate-300 mt-1 leading-relaxed">初、中、高級題型隨機出現，全面考驗反應！</p>
+                        <div class="mt-2.5 pt-2 border-t border-slate-800 text-xs text-amber-300/90">
+                            🏆 無時間限制，拉過勝利線即勝！
+                        </div>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== 畫面 2：左右拔河對戰主畫面 ==================== -->
+        <section id="gameScreen" class="hidden space-y-3.5">
+
+            <!-- 頂部：中央拔河競技場 (Tug-of-War Arena) -->
+            <div class="rounded-3xl bg-slate-900/85 backdrop-blur-md border border-slate-700/80 p-3 sm:p-4 shadow-2xl relative overflow-hidden">
+                <!-- 兩隊頂部狀態列與局勢指示 -->
+                <div class="flex items-center justify-between gap-2 mb-2">
+                    <!-- 左隊狀態 -->
+                    <div class="flex items-center gap-2 sm:gap-3">
+                        <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-cyan-500/20 border border-cyan-400/50 flex items-center justify-center text-cyan-300 font-black text-base sm:text-lg">
+                            🔵
+                        </div>
+                        <div>
+                            <div class="flex items-center gap-1.5">
+                                <span id="hudLeftName" class="font-black text-sm sm:text-base text-cyan-300">藍隊</span>
+                                <span id="hudLeftCombo" class="hidden px-2 py-0.5 rounded-full bg-amber-500/20 border border-amber-400/50 text-amber-300 text-[11px] font-black">
+                                    🔥 2連擊
+                                </span>
+                            </div>
+                            <div class="text-xs text-slate-400">
+                                答對：<span id="hudLeftCorrect" class="text-white font-bold">0</span> 題
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 中央無時限徽章與局勢指示 -->
+                    <div class="text-center flex flex-col items-center">
+                        <div id="tugModeBadge" class="px-3.5 py-1 rounded-full bg-slate-950/90 border border-indigo-500/40 text-indigo-200 font-black text-xs sm:text-sm tracking-wider shadow-inner">
+                            ♾️ 不限時決戰・拉過勝利線即勝
+                        </div>
+                        <div id="tugStatusText" class="text-[11px] sm:text-xs font-bold text-amber-300 mt-1">
+                            ⚖️ 勢均力敵！答對拉動繩索！
+                        </div>
+                    </div>
+
+                    <!-- 右隊狀態 -->
+                    <div class="flex items-center gap-2 sm:gap-3 text-right">
+                        <div>
+                            <div class="flex items-center justify-end gap-1.5">
+                                <span id="hudRightCombo" class="hidden px-2 py-0.5 rounded-full bg-amber-500/20 border border-amber-400/50 text-amber-300 text-[11px] font-black">
+                                    🔥 2連擊
+                                </span>
+                                <span id="hudRightName" class="font-black text-sm sm:text-base text-rose-300">紅隊</span>
+                            </div>
+                            <div class="text-xs text-slate-400">
+                                答對：<span id="hudRightCorrect" class="text-white font-bold">0</span> 題
+                            </div>
+                        </div>
+                        <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-rose-500/20 border border-rose-400/50 flex items-center justify-center text-rose-300 font-black text-base sm:text-lg">
+                            🔴
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 動態拔河 SVG 舞台 -->
+                <div class="relative w-full rounded-2xl bg-slate-950/90 border border-slate-800 overflow-hidden">
+                    <!-- 動態拉動提示浮標 -->
+                    <div id="pullCallout" class="pointer-events-none opacity-0 transition-opacity duration-200 absolute top-2 left-1/2 -translate-x-1/2 z-20 px-3 py-0.5 rounded-full bg-slate-900/95 border border-amber-400/60 text-xs font-black text-amber-300 shadow-lg whitespace-nowrap">
+                        🔵 藍隊猛力一拉！
+                    </div>
+
+                    <svg viewBox="0 0 800 146" class="w-full h-28 sm:h-36 block select-none">
+                        <defs>
+                            <linearGradient id="blueZoneGrad" x1="0" y1="0" x2="1" y2="0">
+                                <stop offset="0%" stop-color="#06b6d4" stop-opacity="0.38"/>
+                                <stop offset="100%" stop-color="#06b6d4" stop-opacity="0.06"/>
+                            </linearGradient>
+                            <linearGradient id="redZoneGrad" x1="0" y1="0" x2="1" y2="0">
+                                <stop offset="0%" stop-color="#f43f5e" stop-opacity="0.06"/>
+                                <stop offset="100%" stop-color="#f43f5e" stop-opacity="0.38"/>
+                            </linearGradient>
+                            <filter id="flagGlow" x="-30%" y="-30%" width="160%" height="160%">
+                                <feGaussianBlur stdDeviation="3" result="blur"/>
+                                <feMerge>
+                                    <feMergeNode in="blur"/>
+                                    <feMergeNode in="SourceGraphic"/>
+                                </feMerge>
+                            </filter>
+                        </defs>
+
+                        <!-- 跑道底板 -->
+                        <rect x="12" y="14" width="776" height="118" rx="14" fill="#0b1120" stroke="#1e293b" stroke-width="2"/>
+
+                        <!-- 左側藍隊勝利區域 -->
+                        <rect x="14" y="16" width="76" height="114" rx="10" fill="url(#blueZoneGrad)"/>
+                        <line x1="90" y1="16" x2="90" y2="130" stroke="#22d3ee" stroke-width="2.5" stroke-dasharray="5 4"/>
+                        <text x="52" y="42" fill="#67e8f9" font-size="12" font-weight="bold" text-anchor="middle">藍隊</text>
+                        <text x="52" y="58" fill="#67e8f9" font-size="12" font-weight="bold" text-anchor="middle">勝利線</text>
+
+                        <!-- 右側紅隊勝利區域 -->
+                        <rect x="710" y="16" width="76" height="114" rx="10" fill="url(#redZoneGrad)"/>
+                        <line x1="710" y1="16" x2="710" y2="130" stroke="#fb7185" stroke-width="2.5" stroke-dasharray="5 4"/>
+                        <text x="748" y="42" fill="#fda4af" font-size="12" font-weight="bold" text-anchor="middle">紅隊</text>
+                        <text x="748" y="58" fill="#fda4af" font-size="12" font-weight="bold" text-anchor="middle">勝利線</text>
+
+                        <!-- 地面刻度與中央基準線 -->
+                        <line x1="245" y1="115" x2="245" y2="128" stroke="#334155" stroke-width="2"/>
+                        <line x1="555" y1="115" x2="555" y2="128" stroke="#334155" stroke-width="2"/>
+                        <line x1="400" y1="16" x2="400" y2="130" stroke="#fbbf24" stroke-width="2" stroke-dasharray="4 4" opacity="0.65"/>
+                        <text x="400" y="126" fill="#94a3b8" font-size="10" font-weight="bold" text-anchor="middle">中線 0</text>
+
+                        <!-- 可左右滑動的拔河繩與兩隊隊員組 -->
+                        <g id="tugAssembly" style="transform: translateX(0px); transition: transform 0.36s cubic-bezier(0.22, 1, 0.36, 1);">
+                            <!-- 拔河主繩索 -->
+                            <line x1="155" y1="86" x2="645" y2="86" stroke="#78350f" stroke-width="8" stroke-linecap="round"/>
+                            <line x1="155" y1="86" x2="645" y2="86" stroke="#fbbf24" stroke-width="4" stroke-dasharray="10 6" stroke-linecap="round"/>
+
+                            <!-- 左隊 3 名拔河選手 (向後仰拉向左方) -->
+                            <g id="leftPullersGroup">
+                                <!-- 選手 L1 -->
+                                <g transform="translate(185, 86) rotate(-14)">
+                                    <line x1="0" y1="-16" x2="-8" y2="24" stroke="#22d3ee" stroke-width="6" stroke-linecap="round"/>
+                                    <line x1="-8" y1="24" x2="-20" y2="40" stroke="#0891b2" stroke-width="5" stroke-linecap="round"/>
+                                    <line x1="-8" y1="24" x2="4" y2="40" stroke="#0891b2" stroke-width="5" stroke-linecap="round"/>
+                                    <line x1="-2" y1="-6" x2="18" y2="2" stroke="#67e8f9" stroke-width="5" stroke-linecap="round"/>
+                                    <circle cx="0" cy="-26" r="10" fill="#06b6d4" stroke="#cffafe" stroke-width="2"/>
+                                    <rect x="2" y="-29" width="7" height="5" rx="2" fill="#0f172a"/>
+                                </g>
+                                <!-- 選手 L2 -->
+                                <g transform="translate(235, 86) rotate(-14)">
+                                    <line x1="0" y1="-16" x2="-8" y2="24" stroke="#22d3ee" stroke-width="6" stroke-linecap="round"/>
+                                    <line x1="-8" y1="24" x2="-20" y2="40" stroke="#0891b2" stroke-width="5" stroke-linecap="round"/>
+                                    <line x1="-8" y1="24" x2="4" y2="40" stroke="#0891b2" stroke-width="5" stroke-linecap="round"/>
+                                    <line x1="-2" y1="-6" x2="18" y2="2" stroke="#67e8f9" stroke-width="5" stroke-linecap="round"/>
+                                    <circle cx="0" cy="-26" r="10" fill="#06b6d4" stroke="#cffafe" stroke-width="2"/>
+                                    <rect x="2" y="-29" width="7" height="5" rx="2" fill="#0f172a"/>
+                                </g>
+                                <!-- 選手 L3 -->
+                                <g transform="translate(285, 86) rotate(-14)">
+                                    <line x1="0" y1="-16" x2="-8" y2="24" stroke="#22d3ee" stroke-width="6" stroke-linecap="round"/>
+                                    <line x1="-8" y1="24" x2="-20" y2="40" stroke="#0891b2" stroke-width="5" stroke-linecap="round"/>
+                                    <line x1="-8" y1="24" x2="4" y2="40" stroke="#0891b2" stroke-width="5" stroke-linecap="round"/>
+                                    <line x1="-2" y1="-6" x2="18" y2="2" stroke="#67e8f9" stroke-width="5" stroke-linecap="round"/>
+                                    <circle cx="0" cy="-26" r="10" fill="#06b6d4" stroke="#cffafe" stroke-width="2"/>
+                                    <rect x="2" y="-29" width="7" height="5" rx="2" fill="#0f172a"/>
+                                </g>
+                            </g>
+
+                            <!-- 右隊 3 名拔河選手 (向後仰拉向右方) -->
+                            <g id="rightPullersGroup">
+                                <!-- 選手 R1 -->
+                                <g transform="translate(515, 86) rotate(14)">
+                                    <line x1="0" y1="-16" x2="8" y2="24" stroke="#fb7185" stroke-width="6" stroke-linecap="round"/>
+                                    <line x1="8" y1="24" x2="20" y2="40" stroke="#e11d48" stroke-width="5" stroke-linecap="round"/>
+                                    <line x1="8" y1="24" x2="-4" y2="40" stroke="#e11d48" stroke-width="5" stroke-linecap="round"/>
+                                    <line x1="2" y1="-6" x2="-18" y2="2" stroke="#fda4af" stroke-width="5" stroke-linecap="round"/>
+                                    <circle cx="0" cy="-26" r="10" fill="#f43f5e" stroke="#ffe4e6" stroke-width="2"/>
+                                    <rect x="-9" y="-29" width="7" height="5" rx="2" fill="#0f172a"/>
+                                </g>
+                                <!-- 選手 R2 -->
+                                <g transform="translate(565, 86) rotate(14)">
+                                    <line x1="0" y1="-16" x2="8" y2="24" stroke="#fb7185" stroke-width="6" stroke-linecap="round"/>
+                                    <line x1="8" y1="24" x2="20" y2="40" stroke="#e11d48" stroke-width="5" stroke-linecap="round"/>
+                                    <line x1="8" y1="24" x2="-4" y2="40" stroke="#e11d48" stroke-width="5" stroke-linecap="round"/>
+                                    <line x1="2" y1="-6" x2="-18" y2="2" stroke="#fda4af" stroke-width="5" stroke-linecap="round"/>
+                                    <circle cx="0" cy="-26" r="10" fill="#f43f5e" stroke="#ffe4e6" stroke-width="2"/>
+                                    <rect x="-9" y="-29" width="7" height="5" rx="2" fill="#0f172a"/>
+                                </g>
+                                <!-- 選手 R3 -->
+                                <g transform="translate(615, 86) rotate(14)">
+                                    <line x1="0" y1="-16" x2="8" y2="24" stroke="#fb7185" stroke-width="6" stroke-linecap="round"/>
+                                    <line x1="8" y1="24" x2="20" y2="40" stroke="#e11d48" stroke-width="5" stroke-linecap="round"/>
+                                    <line x1="8" y1="24" x2="-4" y2="40" stroke="#e11d48" stroke-width="5" stroke-linecap="round"/>
+                                    <line x1="2" y1="-6" x2="-18" y2="2" stroke="#fda4af" stroke-width="5" stroke-linecap="round"/>
+                                    <circle cx="0" cy="-26" r="10" fill="#f43f5e" stroke="#ffe4e6" stroke-width="2"/>
+                                    <rect x="-9" y="-29" width="7" height="5" rx="2" fill="#0f172a"/>
+                                </g>
+                            </g>
+
+                            <!-- 中央決定勝負的能量旗幟標記 -->
+                            <g transform="translate(400, 86)" filter="url(#flagGlow)">
+                                <polygon points="0,-16 13,0 0,16 -13,0" fill="#f59e0b" stroke="#fef3c7" stroke-width="2.5"/>
+                                <polygon points="0,10 11,34 -11,34" fill="#ef4444" stroke="#fef3c7" stroke-width="1.5"/>
+                                <circle cx="0" cy="0" r="4" fill="#ffffff"/>
+                            </g>
+                        </g>
+                    </svg>
+                </div>
+            </div>
+
+            <!-- 底部：左右兩隊獨立對戰作戰面板 -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3.5 sm:gap-4">
+
+                <!-- ==================== 左側：藍隊作戰區 ==================== -->
+                <div id="leftTeamPanel" class="rounded-3xl bg-slate-900/90 border-2 border-cyan-500/45 p-4 sm:p-5 flex flex-col justify-between relative overflow-hidden shadow-xl transition-all">
+                    <!-- 頂部標籤與透視鏡道具 -->
+                    <div class="flex items-center justify-between gap-2 mb-2">
+                        <div class="flex items-center gap-2">
+                            <span class="px-2.5 py-0.5 rounded-full bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 text-xs font-black">
+                                🔵 <span id="panelLeftName">藍隊</span>
+                            </span>
+                            <span class="hidden lg:inline text-[11px] text-slate-500">快捷鍵 [1-4]</span>
+                        </div>
+                        <button id="leftHintBtn" onclick="useTeamHint('left')" class="px-2.5 py-1 rounded-xl bg-amber-500/15 hover:bg-amber-500/25 disabled:opacity-35 disabled:pointer-events-none text-amber-300 border border-amber-500/40 text-xs font-bold flex items-center gap-1 transition">
+                            <span>🔍 透視 (<span id="leftHintCount">2</span>)</span>
+                        </button>
+                    </div>
+
+                    <!-- 題目展示區 -->
+                    <div class="rounded-2xl bg-slate-950/75 border border-slate-800 px-3 py-3 text-center my-1">
+                        <div class="text-[11px] text-slate-400">展開下列代數式：</div>
+                        <div id="leftQuestionText" class="math-expr text-2xl sm:text-3xl lg:text-4xl font-bold text-white py-1.5 select-none">
+                            (x + 3)<span class="math-sup">2</span>
+                        </div>
+                        <div id="leftHintBox" class="hidden mt-1 rounded-lg bg-amber-500/15 border border-amber-400/40 px-2.5 py-1 text-xs text-amber-200"></div>
+                    </div>
+
+                    <!-- 四個選項按鈕 (2x2 網格) -->
+                    <div id="leftOptionsGrid" class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 mt-2.5">
+                        <!-- 由 JS 動態生成 -->
+                    </div>
+
+                    <!-- 答錯手滑冷卻與陷阱診斷覆蓋層 -->
+                    <div id="leftStunOverlay" class="hidden absolute inset-0 z-20 bg-slate-950/92 backdrop-blur-sm p-5 flex flex-col items-center justify-center text-center space-y-2.5">
+                        <div class="px-3 py-1 rounded-full bg-rose-500/20 border border-rose-500/50 text-rose-300 text-xs font-black animate-bounce">
+                            ⚠️ 手滑失誤！繩子被拉走，重新抓緊中...
+                        </div>
+                        <p id="leftStunReason" class="text-xs sm:text-sm text-amber-200 leading-relaxed max-w-sm">
+                            <!-- 錯誤診斷原因 -->
+                        </p>
+                        <div id="leftStunCorrect" class="px-3.5 py-2 rounded-xl bg-slate-900 border border-emerald-500/40 math-expr text-base sm:text-lg font-bold text-emerald-300">
+                            <!-- 正確答案 -->
+                        </div>
+                        <div class="text-xs text-slate-400">2 秒後自動切換下一題...</div>
+                    </div>
+                </div>
+
+                <!-- ==================== 右側：紅隊作戰區 ==================== -->
+                <div id="rightTeamPanel" class="rounded-3xl bg-slate-900/90 border-2 border-rose-500/45 p-4 sm:p-5 flex flex-col justify-between relative overflow-hidden shadow-xl transition-all">
+                    <!-- 頂部標籤與透視鏡道具 -->
+                    <div class="flex items-center justify-between gap-2 mb-2">
+                        <div class="flex items-center gap-2">
+                            <span class="px-2.5 py-0.5 rounded-full bg-rose-500/20 text-rose-300 border border-rose-500/40 text-xs font-black">
+                                🔴 <span id="panelRightName">紅隊</span>
+                            </span>
+                            <span id="rightControlHint" class="hidden lg:inline text-[11px] text-slate-500">快捷鍵 [7-0]</span>
+                        </div>
+                        <button id="rightHintBtn" onclick="useTeamHint('right')" class="px-2.5 py-1 rounded-xl bg-amber-500/15 hover:bg-amber-500/25 disabled:opacity-35 disabled:pointer-events-none text-amber-300 border border-amber-500/40 text-xs font-bold flex items-center gap-1 transition">
+                            <span>🔍 透視 (<span id="rightHintCount">2</span>)</span>
+                        </button>
+                    </div>
+
+                    <!-- 題目展示區 -->
+                    <div class="rounded-2xl bg-slate-950/75 border border-slate-800 px-3 py-3 text-center my-1">
+                        <div class="text-[11px] text-slate-400">展開下列代數式：</div>
+                        <div id="rightQuestionText" class="math-expr text-2xl sm:text-3xl lg:text-4xl font-bold text-white py-1.5 select-none">
+                            (y − 4)<span class="math-sup">2</span>
+                        </div>
+                        <div id="rightHintBox" class="hidden mt-1 rounded-lg bg-amber-500/15 border border-amber-400/40 px-2.5 py-1 text-xs text-amber-200"></div>
+                    </div>
+
+                    <!-- 四個選項按鈕 (2x2 網格) -->
+                    <div id="rightOptionsGrid" class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 mt-2.5">
+                        <!-- 由 JS 動態生成 -->
+                    </div>
+
+                    <!-- 答錯手滑冷卻與陷阱診斷覆蓋層 -->
+                    <div id="rightStunOverlay" class="hidden absolute inset-0 z-20 bg-slate-950/92 backdrop-blur-sm p-5 flex flex-col items-center justify-center text-center space-y-2.5">
+                        <div class="px-3 py-1 rounded-full bg-rose-500/20 border border-rose-500/50 text-rose-300 text-xs font-black animate-bounce">
+                            ⚠️ 手滑失誤！繩子被拉走，重新抓緊中...
+                        </div>
+                        <p id="rightStunReason" class="text-xs sm:text-sm text-amber-200 leading-relaxed max-w-sm">
+                            <!-- 錯誤診斷原因 -->
+                        </p>
+                        <div id="rightStunCorrect" class="px-3.5 py-2 rounded-xl bg-slate-900 border border-emerald-500/40 math-expr text-base sm:text-lg font-bold text-emerald-300">
+                            <!-- 正確答案 -->
+                        </div>
+                        <div class="text-xs text-slate-400">2 秒後自動切換下一題...</div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ==================== 畫面 3：拔河結算報告與雙隊錯題筆記 ==================== -->
+        <section id="resultScreen" class="hidden space-y-5">
+            <div class="rounded-3xl bg-slate-900/90 border border-indigo-500/40 p-6 sm:p-8 text-center space-y-5 shadow-2xl">
+                <!-- 勝利隊伍徽章 -->
+                <div class="inline-flex flex-col items-center">
+                    <div id="winnerIcon" class="w-20 h-20 rounded-2xl bg-gradient-to-br from-amber-300 via-yellow-400 to-orange-500 text-slate-950 font-black text-5xl flex items-center justify-center shadow-xl shadow-amber-500/30 animate-float">
+                        🏆
+                    </div>
+                    <h2 id="winnerTitle" class="text-2xl sm:text-4xl font-black text-white mt-3">藍隊 拔河獲勝！</h2>
+                    <p id="winnerSubtitle" class="text-sm text-slate-300 mt-1">憑藉精準的代數展開實力，成功將能量繩拉過勝利線！</p>
+                </div>
+
+                <!-- 最終拔河位置視覺條 -->
+                <div class="max-w-xl mx-auto rounded-2xl bg-slate-950/80 border border-slate-800 p-4">
+                    <div class="flex justify-between text-xs font-bold mb-1.5">
+                        <span id="resLeftLabel" class="text-cyan-300">🔵 藍隊陣地</span>
+                        <span class="text-slate-400">最終旗幟位置</span>
+                        <span id="resRightLabel" class="text-rose-300">🔴 紅隊陣地</span>
+                    </div>
+                    <div class="relative w-full h-4 rounded-full bg-gradient-to-r from-cyan-600/40 via-slate-800 to-rose-600/40 border border-slate-700">
+                        <div class="absolute top-0 bottom-0 left-1/2 w-0.5 bg-slate-500"></div>
+                        <div id="resFlagMarker" class="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-5 h-5 rounded-full bg-amber-400 border-2 border-white shadow-lg" style="left: 50%;"></div>
+                    </div>
+                </div>
+
+                <!-- 兩隊戰績對比卡片 -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-3xl mx-auto text-left">
+                    <!-- 藍隊統計 -->
+                    <div class="rounded-2xl bg-cyan-950/35 border border-cyan-500/40 p-4 space-y-2">
+                        <div class="flex items-center justify-between">
+                            <span id="statLeftTitle" class="font-black text-base text-cyan-300">🔵 藍隊戰績</span>
+                            <span id="statLeftAcc" class="text-xs font-bold px-2.5 py-0.5 rounded-full bg-cyan-500/20 text-cyan-200">準確率 100%</span>
+                        </div>
+                        <div class="grid grid-cols-3 gap-2 text-center pt-1">
+                            <div class="rounded-xl bg-slate-950/70 p-2">
+                                <div class="text-[11px] text-slate-400">答對題數</div>
+                                <div id="statLeftCorrect" class="text-lg font-black text-white">0</div>
+                            </div>
+                            <div class="rounded-xl bg-slate-950/70 p-2">
+                                <div class="text-[11px] text-slate-400">最高連擊</div>
+                                <div id="statLeftCombo" class="text-lg font-black text-amber-300">0</div>
+                            </div>
+                            <div class="rounded-xl bg-slate-950/70 p-2">
+                                <div class="text-[11px] text-slate-400">失誤次數</div>
+                                <div id="statLeftWrong" class="text-lg font-black text-rose-400">0</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 紅隊統計 -->
+                    <div class="rounded-2xl bg-rose-950/35 border border-rose-500/40 p-4 space-y-2">
+                        <div class="flex items-center justify-between">
+                            <span id="statRightTitle" class="font-black text-base text-rose-300">🔴 紅隊戰績</span>
+                            <span id="statRightAcc" class="text-xs font-bold px-2.5 py-0.5 rounded-full bg-rose-500/20 text-rose-200">準確率 100%</span>
+                        </div>
+                        <div class="grid grid-cols-3 gap-2 text-center pt-1">
+                            <div class="rounded-xl bg-slate-950/70 p-2">
+                                <div class="text-[11px] text-slate-400">答對題數</div>
+                                <div id="statRightCorrect" class="text-lg font-black text-white">0</div>
+                            </div>
+                            <div class="rounded-xl bg-slate-950/70 p-2">
+                                <div class="text-[11px] text-slate-400">最高連擊</div>
+                                <div id="statRightCombo" class="text-lg font-black text-amber-300">0</div>
+                            </div>
+                            <div class="rounded-xl bg-slate-950/70 p-2">
+                                <div class="text-[11px] text-slate-400">失誤次數</div>
+                                <div id="statRightWrong" class="text-lg font-black text-rose-400">0</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 操作按鈕 -->
+                <div class="flex flex-wrap items-center justify-center gap-3 pt-1">
+                    <button onclick="restartTugGame()" class="px-6 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-sm sm:text-base shadow-lg shadow-indigo-600/30 transition">
+                        🔄 再戰一局
+                    </button>
+                    <button onclick="returnToMenu()" class="px-6 py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold text-sm sm:text-base border border-slate-700 transition">
+                        🏠 返回主選單
+                    </button>
+                </div>
+            </div>
+
+            <!-- 雙隊錯題重溫筆記本 -->
+            <div id="mistakeReviewSection" class="hidden rounded-3xl bg-slate-900/90 border border-rose-500/30 p-5 sm:p-6 space-y-4">
+                <div class="flex items-center justify-between">
+                    <h3 class="text-lg font-bold text-rose-300 flex items-center gap-2">
+                        <span>📝</span>
+                        <span>本局錯題診斷筆記（全班共同重溫）</span>
+                    </h3>
+                    <span class="text-xs text-slate-400">避開中二常見陷阱，下次拉得更穩！</span>
+                </div>
+                <div id="mistakeList" class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    <!-- 動態生成錯題詳解卡片 -->
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ==================== 彈窗：公式錦囊與幾何面積圖解 ==================== -->
+    <div id="formulaModal" class="hidden fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-slate-900 border border-slate-700 rounded-3xl max-w-3xl w-full max-h-[88vh] overflow-y-auto p-5 sm:p-7 space-y-5 shadow-2xl">
+            <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+                <h3 class="text-xl font-black text-white flex items-center gap-2">
+                    <span>📖</span>
+                    <span>中二數學：恒等式公式錦囊與幾何圖解</span>
+                </h3>
+                <button onclick="toggleFormulaModal(false)" class="w-9 h-9 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 flex items-center justify-center font-bold">
+                    ✕
+                </button>
+            </div>
+
+            <!-- 幾何面積直觀理解 (a+b)^2 -->
+            <div class="rounded-2xl bg-slate-950/70 border border-cyan-500/30 p-4 grid grid-cols-1 sm:grid-cols-12 gap-4 items-center">
+                <div class="sm:col-span-5 flex justify-center">
+                    <!-- SVG 幾何面積分割圖 -->
+                    <svg viewBox="0 0 210 210" class="w-44 h-44 select-none">
+                        <!-- 外框 -->
+                        <rect x="25" y="25" width="160" height="160" rx="6" fill="#0f172a" stroke="#64748b" stroke-width="2"/>
+                        <!-- a^2 區域 -->
+                        <rect x="25" y="25" width="105" height="105" fill="rgba(34, 211, 238, 0.25)" stroke="#22d3ee" stroke-width="1.5"/>
+                        <text x="77" y="83" fill="#67e8f9" font-size="18" font-family="serif" font-style="italic" text-anchor="middle" font-weight="bold">a²</text>
+                        <!-- ab 右上 -->
+                        <rect x="130" y="25" width="55" height="105" fill="rgba(168, 85, 247, 0.25)" stroke="#c084fc" stroke-width="1.5"/>
+                        <text x="157" y="83" fill="#e9d5ff" font-size="15" font-family="serif" font-style="italic" text-anchor="middle" font-weight="bold">ab</text>
+                        <!-- ab 左下 -->
+                        <rect x="25" y="130" width="105" height="55" fill="rgba(168, 85, 247, 0.25)" stroke="#c084fc" stroke-width="1.5"/>
+                        <text x="77" y="162" fill="#e9d5ff" font-size="15" font-family="serif" font-style="italic" text-anchor="middle" font-weight="bold">ab</text>
+                        <!-- b^2 右下 -->
+                        <rect x="130" y="130" width="55" height="55" fill="rgba(244, 114, 182, 0.25)" stroke="#f472b6" stroke-width="1.5"/>
+                        <text x="157" y="162" fill="#fbcfe8" font-size="16" font-family="serif" font-style="italic" text-anchor="middle" font-weight="bold">b²</text>
+                        <!-- 邊長標註 -->
+                        <text x="77" y="17" fill="#22d3ee" font-size="14" font-family="serif" font-style="italic" text-anchor="middle">a</text>
+                        <text x="157" y="17" fill="#f472b6" font-size="14" font-family="serif" font-style="italic" text-anchor="middle">b</text>
+                        <text x="13" y="82" fill="#22d3ee" font-size="14" font-family="serif" font-style="italic" text-anchor="middle">a</text>
+                        <text x="13" y="162" fill="#f472b6" font-size="14" font-family="serif" font-style="italic" text-anchor="middle">b</text>
+                    </svg>
+                </div>
+                <div class="sm:col-span-7 space-y-2">
+                    <h4 class="font-bold text-cyan-300 text-base">為什麼 (a + b)² 會有「+ 2ab」？</h4>
+                    <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                        把邊長為 <span class="math-expr font-bold text-white">(a + b)</span> 的大正方形切成 4 塊（如左圖）：
+                    </p>
+                    <ul class="text-xs sm:text-sm text-slate-300 space-y-1 list-disc list-inside">
+                        <li>左上角大正方形面積 = <span class="math-expr text-cyan-300 font-bold">a²</span></li>
+                        <li>右下角小正方形面積 = <span class="math-expr text-pink-300 font-bold">b²</span></li>
+                        <li>右上與左下兩個長方形面積各為 <span class="math-expr text-purple-300 font-bold">ab</span>，合起來正是 <span class="math-expr text-amber-300 font-bold">2ab</span>！</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- 考試必背三大口訣與例題 -->
+            <div class="space-y-3">
+                <h4 class="font-bold text-white text-sm">📌 考試解題三步曲 &amp; 常見陷阱提醒</h4>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs">
+                    <div class="rounded-xl bg-slate-800/70 p-3.5 border border-slate-700 space-y-1.5">
+                        <div class="font-bold text-cyan-300">1. 係數必須一併平方</div>
+                        <div class="math-expr text-sm text-white bg-slate-950 p-2 rounded-lg">
+                            (3x + 2)<span class="math-sup">2</span><br>
+                            = (3x)<span class="math-sup">2</span> + 2(3x)(2) + 2<span class="math-sup">2</span><br>
+                            = <span class="text-emerald-400 font-bold">9x<span class="math-sup">2</span> + 12x + 4</span>
+                        </div>
+                        <p class="text-slate-400">❌ 切勿寫成 3x² + 12x + 4！</p>
+                    </div>
+
+                    <div class="rounded-xl bg-slate-800/70 p-3.5 border border-slate-700 space-y-1.5">
+                        <div class="font-bold text-purple-300">2. 完全平方差尾項為正</div>
+                        <div class="math-expr text-sm text-white bg-slate-950 p-2 rounded-lg">
+                            (2x − 5y)<span class="math-sup">2</span><br>
+                            = (2x)<span class="math-sup">2</span> − 2(2x)(5y) + (5y)<span class="math-sup">2</span><br>
+                            = <span class="text-emerald-400 font-bold">4x<span class="math-sup">2</span> − 20xy + 25y<span class="math-sup">2</span></span>
+                        </div>
+                        <p class="text-slate-400">❌ 尾項不是 −25y²！</p>
+                    </div>
+
+                    <div class="rounded-xl bg-slate-800/70 p-3.5 border border-slate-700 space-y-1.5">
+                        <div class="font-bold text-pink-300">3. 平方差認清「同項減異項」</div>
+                        <div class="math-expr text-sm text-white bg-slate-950 p-2 rounded-lg">
+                            (4 − 3x)(3x + 4)<br>
+                            = (4 − 3x)(4 + 3x)<br>
+                            = <span class="text-emerald-400 font-bold">16 − 9x<span class="math-sup">2</span></span>
+                        </div>
+                        <p class="text-slate-400">💡 符號相同的 4 放前面平方！</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-right pt-2">
+                <button onclick="toggleFormulaModal(false)" class="px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-sm transition">
+                    明白，繼續作戰！
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 頁尾 -->
+    <footer class="w-full py-3 text-center text-xs text-slate-500 border-t border-slate-900/80">
+        香港中學二年級數學科互動學習工具｜代數恒等式（完全平方公式與平方差公式）
+    </footer>
+
+    <!-- ==================== 核心遊戲邏輯與代數引擎 ==================== -->
+    <script>
+        /**
+         * 1. 音效合成器 (Web Audio API，無需外部音檔即可發出清脆音效)
+         */
+        class SoundEffects {
+            constructor() {
+                this.enabled = true;
+                this.ctx = null;
+            }
+
+            init() {
+                if (!this.ctx) {
+                    const AudioCtx = window.AudioContext || window.webkitAudioContext;
+                    if (AudioCtx) this.ctx = new AudioCtx();
+                }
+                if (this.ctx && this.ctx.state === 'suspended') {
+                    this.ctx.resume();
+                }
+            }
+
+            playCorrect(combo = 1) {
+                if (!this.enabled) return;
+                this.init();
+                if (!this.ctx) return;
+
+                const now = this.ctx.currentTime;
+                // 隨連擊數提升音高，增強爽快感
+                const baseFreq = Math.min(523.25 * Math.pow(1.05, combo - 1), 880);
+                const osc = this.ctx.createOscillator();
+                const gain = this.ctx.createGain();
+
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(baseFreq, now);
+                osc.frequency.exponentialRampToValueAtTime(baseFreq * 1.25, now + 0.14);
+
+                gain.gain.setValueAtTime(0.18, now);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.25);
+
+                osc.connect(gain);
+                gain.connect(this.ctx.destination);
+                osc.start(now);
+                osc.stop(now + 0.26);
+            }
+
+            playWrong() {
+                if (!this.enabled) return;
+                this.init();
+                if (!this.ctx) return;
+
+                const now = this.ctx.currentTime;
+                const osc = this.ctx.createOscillator();
+                const gain = this.ctx.createGain();
+
+                osc.type = 'sawtooth';
+                osc.frequency.setValueAtTime(190, now);
+                osc.frequency.linearRampToValueAtTime(135, now + 0.28);
+
+                gain.gain.setValueAtTime(0.14, now);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.3);
+
+                osc.connect(gain);
+                gain.connect(this.ctx.destination);
+                osc.start(now);
+                osc.stop(now + 0.31);
+            }
+
+            playPowerup() {
+                if (!this.enabled) return;
+                this.init();
+                if (!this.ctx) return;
+
+                const now = this.ctx.currentTime;
+                [587.33, 783.99, 1046.5].forEach((freq, idx) => {
+                    const osc = this.ctx.createOscillator();
+                    const gain = this.ctx.createGain();
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(freq, now + idx * 0.05);
+                    gain.gain.setValueAtTime(0.12, now + idx * 0.05);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.05 + 0.2);
+                    osc.connect(gain);
+                    gain.connect(this.ctx.destination);
+                    osc.start(now + idx * 0.05);
+                    osc.stop(now + idx * 0.05 + 0.21);
+                });
+            }
+        }
+
+        const sfx = new SoundEffects();
+
+        function toggleSound() {
+            sfx.enabled = !sfx.enabled;
+            document.getElementById('soundIcon').textContent = sfx.enabled ? '🔊' : '🔇';
+        }
+
+        /**
+         * 2. 精準代數多項式運算與排版引擎
+         * 單項式結構: { coeff: number, vars: { [varName]: exponent } }
+         */
+        function multiplyTerms(t1, t2) {
+            const newVars = { ...t1.vars };
+            for (const [v, exp] of Object.entries(t2.vars)) {
+                newVars[v] = (newVars[v] || 0) + exp;
+            }
+            return {
+                coeff: t1.coeff * t2.coeff,
+                vars: newVars
+            };
+        }
+
+        // 渲染單一單項式（不含前導正負號，用於步驟說明）
+        function renderAbsTerm(term) {
+            const absC = Math.abs(term.coeff);
+            const varKeys = Object.keys(term.vars).sort();
+            if (varKeys.length === 0) {
+                return `${absC}`;
+            }
+            let varHtml = '';
+            for (const v of varKeys) {
+                const exp = term.vars[v];
+                varHtml += `<span class="math-var">${v}</span>` + (exp > 1 ? `<span class="math-sup">${exp}</span>` : '');
+            }
+            return (absC === 1 ? '' : `${absC}`) + varHtml;
+        }
+
+        // 將多項式陣列渲染為標準 HTML 算式
+        function renderPoly(terms) {
+            const nonZero = terms.filter(t => t.coeff !== 0);
+            if (nonZero.length === 0) return '0';
+
+            return nonZero.map((t, index) => {
+                const isNeg = t.coeff < 0;
+                const sign = index === 0 ? (isNeg ? '−' : '') : (isNeg ? ' − ' : ' + ');
+                return sign + renderAbsTerm(t);
+            }).join('');
+        }
+
+        // 隨機整數工具
+        function randInt(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+
+        function pickRandom(arr) {
+            return arr[Math.floor(Math.random() * arr.length)];
+        }
+
+        function shuffleArray(arr) {
+            const copy = [...arr];
+            for (let i = copy.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [copy[i], copy[j]] = [copy[j], copy[i]];
+            }
+            return copy;
+        }
+
+        /**
+         * 3. 中二恒等式題目與「常見陷阱干擾項」生成器
+         */
+        const FORMULA_INFO = {
+            SUM_SQ: {
+                key: 'SUM_SQ',
+                name: '完全平方公式 (和)',
+                badgeClass: 'bg-cyan-500/20 text-cyan-300 border-cyan-500/40',
+                formulaHtml: '(a + b)<span class="math-sup">2</span> = a<span class="math-sup">2</span> + 2ab + b<span class="math-sup">2</span>'
+            },
+            DIFF_SQ: {
+                key: 'DIFF_SQ',
+                name: '完全平方公式 (差)',
+                badgeClass: 'bg-purple-500/20 text-purple-300 border-purple-500/40',
+                formulaHtml: '(a − b)<span class="math-sup">2</span> = a<span class="math-sup">2</span> − 2ab + b<span class="math-sup">2</span>'
+            },
+            DIFF_TWO_SQ: {
+                key: 'DIFF_TWO_SQ',
+                name: '平方差公式',
+                badgeClass: 'bg-pink-500/20 text-pink-300 border-pink-500/40',
+                formulaHtml: '(a + b)(a − b) = a<span class="math-sup">2</span> − b<span class="math-sup">2</span>'
+            }
+        };
+
+        function generateQuestion(difficulty, forcedType = null) {
+            const types = ['SUM_SQ', 'DIFF_SQ', 'DIFF_TWO_SQ'];
+            const type = forcedType || pickRandom(types);
+
+            let termA, termB;
+            let questionHtml = '';
+
+            // 根據難度生成項 A 與項 B
+            if (difficulty === 'easy') {
+                const v = pickRandom(['x', 'y', 'a', 'm', 'n']);
+                const c = randInt(2, 9);
+                const reverseOrder = Math.random() < 0.25; // 偶爾將常數放前面，如 (4 + x)^2
+                if (reverseOrder) {
+                    termA = { coeff: c, vars: {} };
+                    termB = { coeff: 1, vars: { [v]: 1 } };
+                } else {
+                    termA = { coeff: 1, vars: { [v]: 1 } };
+                    termB = { coeff: c, vars: {} };
+                }
+            } else if (difficulty === 'medium') {
+                const v = pickRandom(['x', 'y', 'a', 'k', 'p']);
+                const c1 = randInt(2, 5);
+                const c2 = randInt(1, 7);
+                const reverseOrder = Math.random() < 0.35; // 如 (3 - 2x)^2 或 (5 + 4x)(5 - 4x)
+                if (reverseOrder) {
+                    termA = { coeff: c2, vars: {} };
+                    termB = { coeff: c1, vars: { [v]: 1 } };
+                } else {
+                    termA = { coeff: c1, vars: { [v]: 1 } };
+                    termB = { coeff: c2, vars: {} };
+                }
+            } else {
+                // hard: 雙變數或進階倒序排列
+                const [v1, v2] = pickRandom([['x', 'y'], ['a', 'b'], ['p', 'q'], ['m', 'n']]);
+                let c1 = randInt(1, 5);
+                let c2 = randInt(1, 5);
+                if (c1 === 1 && c2 === 1) c1 = randInt(2, 4); // 確保至少一個係數大於 1
+                termA = { coeff: c1, vars: { [v1]: 1 } };
+                termB = { coeff: c2, vars: { [v2]: 1 } };
+            }
+
+            const strA = renderAbsTerm(termA);
+            const strB = renderAbsTerm(termB);
+
+            // 計算正確展開項
+            const A2 = multiplyTerms(termA, termA);
+            const B2 = multiplyTerms(termB, termB);
+            const AB = multiplyTerms(termA, termB);
+            const twoAB = multiplyTerms({ coeff: 2, vars: {} }, AB);
+            const negTwoAB = multiplyTerms({ coeff: -2, vars: {} }, AB);
+            const negB2 = { coeff: -B2.coeff, vars: B2.vars };
+            const negA2 = { coeff: -A2.coeff, vars: A2.vars };
+
+            // 用於製造「係數忘記平方」的錯誤項
+            const unSquaredA2 = { coeff: termA.coeff, vars: A2.vars };
+            const unSquaredB2 = { coeff: termB.coeff, vars: B2.vars };
+
+            let correctHtml = '';
+            let stepsHtml = '';
+            let distractors = [];
+
+            if (type === 'SUM_SQ') {
+                questionHtml = `(${strA} + ${strB})<span class="math-sup">2</span>`;
+                correctHtml = renderPoly([A2, twoAB, B2]);
+                stepsHtml = `
+                    <div class="text-xs text-slate-400 mb-1">套用完全平方公式 (a + b)² = a² + 2ab + b²（其中 a = ${strA}，b = ${strB}）：</div>
+                    <div>= (${strA})<span class="math-sup">2</span> + 2(${strA})(${strB}) + (${strB})<span class="math-sup">2</span></div>
+                    <div class="font-bold text-emerald-300 mt-0.5">= ${correctHtml}</div>
+                `;
+
+                // 陷阱 1：漏掉中間項 2ab
+                distractors.push({
+                    html: renderPoly([A2, B2]),
+                    reason: `你漏掉了中間項 2ab！記住 (${strA} + ${strB})² 不等於 (${strA})² + (${strB})²，中間必須加上 2(${strA})(${strB}) = ${renderAbsTerm(twoAB)}。`
+                });
+                // 陷阱 2：中間項忘記乘 2
+                distractors.push({
+                    html: renderPoly([A2, AB, B2]),
+                    reason: `中間項忘記乘以 2 了！應該是 2 × (${strA}) × (${strB}) = ${renderAbsTerm(twoAB)}，而不是 ${renderAbsTerm(AB)}。`
+                });
+                // 陷阱 3：係數忘記平方（若有係數 > 1）或符號全變減
+                if (termA.coeff > 1 && Object.keys(termA.vars).length > 0) {
+                    distractors.push({
+                        html: renderPoly([unSquaredA2, twoAB, B2]),
+                        reason: `係數忘記一併平方了！(${strA})² 應該把係數 ${termA.coeff} 也平方變成 ${A2.coeff}，即 ${renderAbsTerm(A2)}。`
+                    });
+                } else if (termB.coeff > 1 && Object.keys(termB.vars).length > 0) {
+                    distractors.push({
+                        html: renderPoly([A2, twoAB, unSquaredB2]),
+                        reason: `係數忘記一併平方了！(${strB})² 應該把係數 ${termB.coeff} 也平方變成 ${B2.coeff}，即 ${renderAbsTerm(B2)}。`
+                    });
+                } else {
+                    distractors.push({
+                        html: renderPoly([A2, negTwoAB, B2]),
+                        reason: `這是「和的平方」(${strA} + ${strB})²，展開後中間項應該是正號 (+ ${renderAbsTerm(twoAB)}) 喔！`
+                    });
+                }
+
+            } else if (type === 'DIFF_SQ') {
+                questionHtml = `(${strA} − ${strB})<span class="math-sup">2</span>`;
+                correctHtml = renderPoly([A2, negTwoAB, B2]);
+                stepsHtml = `
+                    <div class="text-xs text-slate-400 mb-1">套用完全平方公式 (a − b)² = a² − 2ab + b²（其中 a = ${strA}，b = ${strB}）：</div>
+                    <div>= (${strA})<span class="math-sup">2</span> − 2(${strA})(${strB}) + (${strB})<span class="math-sup">2</span></div>
+                    <div class="font-bold text-emerald-300 mt-0.5">= ${correctHtml}</div>
+                `;
+
+                // 陷阱 1：尾項符號寫成減號 (-b^2)
+                distractors.push({
+                    html: renderPoly([A2, negTwoAB, negB2]),
+                    reason: `最後一項符號出錯了！因為 (−${strB})² = +${renderAbsTerm(B2)}，負數的平方是正數，所以尾項應該是 + ${renderAbsTerm(B2)}。`
+                });
+                // 陷阱 2：漏掉中間項 -2ab
+                distractors.push({
+                    html: renderPoly([A2, negB2]),
+                    reason: `你把 (${strA} − ${strB})² 和平方差公式混淆了！完全平方差展開後共有三項，不能漏掉中間的 − ${renderAbsTerm(twoAB)}。`
+                });
+                // 陷阱 3：係數忘記平方或中間項忘記乘 2
+                if (termA.coeff > 1 && Object.keys(termA.vars).length > 0) {
+                    distractors.push({
+                        html: renderPoly([unSquaredA2, negTwoAB, B2]),
+                        reason: `係數忘記平方了！(${strA})² 應該等於 ${renderAbsTerm(A2)}，別忘了把數字係數 ${termA.coeff} 也平方！`
+                    });
+                } else if (termB.coeff > 1 && Object.keys(termB.vars).length > 0) {
+                    distractors.push({
+                        html: renderPoly([A2, negTwoAB, unSquaredB2]),
+                        reason: `係數忘記平方了！(${strB})² 應該等於 ${renderAbsTerm(B2)}，別忘了把數字係數 ${termB.coeff} 也平方！`
+                    });
+                } else {
+                    distractors.push({
+                        html: renderPoly([A2, { coeff: -AB.coeff, vars: AB.vars }, B2]),
+                        reason: `中間項忘記乘以 2 了！應該是 −2(${strA})(${strB}) = −${renderAbsTerm(twoAB)}。`
+                    });
+                }
+
+            } else {
+                // DIFF_TWO_SQ: 平方差公式
+                // 在中高級難度中，偶爾使用變式排列如 (a - b)(a + b) 或 (b + a)(a - b)
+                const variant = difficulty === 'easy' ? 0 : randInt(0, 2);
+                if (variant === 0) {
+                    questionHtml = `(${strA} + ${strB})(${strA} − ${strB})`;
+                } else if (variant === 1) {
+                    questionHtml = `(${strA} − ${strB})(${strA} + ${strB})`;
+                } else {
+                    // 變式：符號相同的項在前後位置對調，如 (3y + 2x)(2x - 3y) -> 相同項為 2x，相反項為 3y
+                    questionHtml = `(${strB} + ${strA})(${strA} − ${strB})`;
+                }
+
+                correctHtml = renderPoly([A2, negB2]);
+                stepsHtml = `
+                    <div class="text-xs text-slate-400 mb-1">套用平方差公式 (a + b)(a − b) = a² − b²（相同項 a = ${strA}，相反項 b = ${strB}）：</div>
+                    <div>= (${strA})<span class="math-sup">2</span> − (${strB})<span class="math-sup">2</span></div>
+                    <div class="font-bold text-emerald-300 mt-0.5">= ${correctHtml}</div>
+                `;
+
+                // 陷阱 1：中間寫成加號 (+b^2)
+                distractors.push({
+                    html: renderPoly([A2, B2]),
+                    reason: `平方差公式結果是 a² − b²，中間必須是「減號」而不是加號喔！`
+                });
+                // 陷阱 2：多餘加上中間項
+                distractors.push({
+                    html: renderPoly([A2, negTwoAB, negB2]),
+                    reason: `在 (${strA} + ${strB})(${strA} − ${strB}) 展開時，+${renderAbsTerm(AB)} 與 −${renderAbsTerm(AB)} 互相抵消了，所以沒有中間項！`
+                });
+                // 陷阱 3：係數忘記平方 或 被減數順序倒反 (B^2 - A^2)
+                if (termA.coeff > 1 && Object.keys(termA.vars).length > 0) {
+                    distractors.push({
+                        html: renderPoly([unSquaredA2, negB2]),
+                        reason: `係數忘記一併平方了！(${strA})² = ${renderAbsTerm(A2)}，數字係數 ${termA.coeff} 也要平方喔！`
+                    });
+                } else if (termB.coeff > 1 && Object.keys(termB.vars).length > 0) {
+                    distractors.push({
+                        html: renderPoly([A2, { coeff: -unSquaredB2.coeff, vars: unSquaredB2.vars }]),
+                        reason: `係數忘記一併平方了！(${strB})² = ${renderAbsTerm(B2)}，數字係數 ${termB.coeff} 也要平方喔！`
+                    });
+                } else {
+                    distractors.push({
+                        html: renderPoly([B2, negA2]),
+                        reason: `減法順序倒反了！應該用「符號相同的項」平方減去「符號相反的項」平方，即 ${renderAbsTerm(A2)} − ${renderAbsTerm(B2)}。`
+                    });
+                }
+            }
+
+            // 確保 4 個選項完全不重複（防碰撞保護機制）
+            const uniqueOptions = [{ html: correctHtml, isCorrect: true, reason: '' }];
+            const seenHtml = new Set([correctHtml]);
+
+            for (const d of distractors) {
+                if (!seenHtml.has(d.html) && uniqueOptions.length < 4) {
+                    seenHtml.add(d.html);
+                    uniqueOptions.push({ html: d.html, isCorrect: false, reason: d.reason });
+                }
+            }
+
+            // 若仍有不足 4 個選項，生成額外備用干擾項
+            const fallbackPool = [
+                { html: renderPoly([B2, negA2]), reason: '前後兩項的順序倒反了，請再核對 a 與 b 的位置！' },
+                { html: renderPoly([A2, twoAB, negB2]), reason: '正負號配置有誤，請重新套用恒等式展開！' },
+                { html: renderPoly([A2, { coeff: 4 * AB.coeff, vars: AB.vars }, B2]), reason: '中間項係數計算有誤，應該是 2ab 喔！' }
+            ];
+            for (const fb of fallbackPool) {
+                if (!seenHtml.has(fb.html) && uniqueOptions.length < 4) {
+                    seenHtml.add(fb.html);
+                    uniqueOptions.push({ html: fb.html, isCorrect: false, reason: fb.reason });
+                }
+            }
+
+            return {
+                type,
+                formulaInfo: FORMULA_INFO[type],
+                termA,
+                termB,
+                strA,
+                strB,
+                questionHtml,
+                correctHtml,
+                stepsHtml,
+                options: shuffleArray(uniqueOptions)
+            };
+        }
+
+        /**
+         * 4. 左右兩組拔河對戰狀態與控制引擎（無時間限制，拉過勝利線即分勝負）
+         */
+        let selectedBattleType = 'pvp'; // 'pvp' (雙隊同屏) | 'ai' (單人對戰 AI)
+
+        let tugState = {
+            difficulty: 'easy',
+            battleType: 'pvp',
+            ropePosition: 0, // -100 (藍隊勝利線) 至 +100 (紅隊勝利線)
+            isGameOver: false,
+            aiTimeout: null,
+            calloutTimeout: null,
+            mistakes: [],
+            left: {
+                name: '藍隊',
+                correct: 0,
+                wrong: 0,
+                combo: 0,
+                maxCombo: 0,
+                hintsLeft: 2,
+                stunned: false,
+                stunTimer: null,
+                question: null
+            },
+            right: {
+                name: '紅隊',
+                correct: 0,
+                wrong: 0,
+                combo: 0,
+                maxCombo: 0,
+                hintsLeft: 2,
+                stunned: false,
+                stunTimer: null,
+                question: null
+            }
+        };
+
+        function setBattleType(type) {
+            selectedBattleType = type;
+            const pvpBtn = document.getElementById('battleTypePvpBtn');
+            const aiBtn = document.getElementById('battleTypeAiBtn');
+            const rightInput = document.getElementById('rightTeamNameInput');
+
+            const activeClasses = ['bg-indigo-600', 'text-white', 'border-indigo-400', 'shadow-md'];
+            const inactiveClasses = ['bg-slate-800', 'hover:bg-slate-700', 'text-slate-300', 'border-slate-700'];
+
+            if (type === 'pvp') {
+                pvpBtn.classList.add(...activeClasses);
+                pvpBtn.classList.remove(...inactiveClasses);
+                aiBtn.classList.remove(...activeClasses);
+                aiBtn.classList.add(...inactiveClasses);
+                if (rightInput && rightInput.value.trim() === 'AI 電腦') {
+                    rightInput.value = '紅隊';
+                }
+            } else {
+                aiBtn.classList.add(...activeClasses);
+                aiBtn.classList.remove(...inactiveClasses);
+                pvpBtn.classList.remove(...activeClasses);
+                pvpBtn.classList.add(...inactiveClasses);
+                if (rightInput && rightInput.value.trim() === '紅隊') {
+                    rightInput.value = 'AI 電腦';
+                }
+            }
+        }
+
+        function switchScreen(screenId) {
+            ['menuScreen', 'gameScreen', 'resultScreen'].forEach(id => {
+                const el = document.getElementById(id);
+                if (el) {
+                    if (id === screenId) {
+                        el.classList.remove('hidden');
+                    } else {
+                        el.classList.add('hidden');
+                    }
+                }
+            });
+
+            const quitBtn = document.getElementById('quitGameBtn');
+            if (quitBtn) {
+                if (screenId === 'gameScreen') {
+                    quitBtn.classList.remove('hidden');
+                } else {
+                    quitBtn.classList.add('hidden');
+                }
+            }
+        }
+
+        function toggleFormulaModal(show) {
+            const modal = document.getElementById('formulaModal');
+            if (!modal) return;
+            if (show) {
+                modal.classList.remove('hidden');
+            } else {
+                modal.classList.add('hidden');
+            }
+        }
+
+        function clearAllTimers() {
+            clearTimeout(tugState.aiTimeout);
+            clearTimeout(tugState.calloutTimeout);
+            clearTimeout(tugState.left.stunTimer);
+            clearTimeout(tugState.right.stunTimer);
+        }
+
+        function returnToMenu() {
+            clearAllTimers();
+            switchScreen('menuScreen');
+        }
+
+        function startTugGame(difficulty) {
+            sfx.init();
+            clearAllTimers();
+
+            const leftName = (document.getElementById('leftTeamNameInput').value || '').trim() || '藍隊';
+            const rightName = (document.getElementById('rightTeamNameInput').value || '').trim() || (selectedBattleType === 'ai' ? 'AI 電腦' : '紅隊');
+
+            tugState = {
+                difficulty,
+                battleType: selectedBattleType,
+                ropePosition: 0,
+                isGameOver: false,
+                aiTimeout: null,
+                calloutTimeout: null,
+                mistakes: [],
+                left: {
+                    name: leftName,
+                    correct: 0,
+                    wrong: 0,
+                    combo: 0,
+                    maxCombo: 0,
+                    hintsLeft: 2,
+                    stunned: false,
+                    stunTimer: null,
+                    question: null
+                },
+                right: {
+                    name: rightName,
+                    correct: 0,
+                    wrong: 0,
+                    combo: 0,
+                    maxCombo: 0,
+                    hintsLeft: 2,
+                    stunned: false,
+                    stunTimer: null,
+                    question: null
+                }
+            };
+
+            // 更新隊伍顯示名稱
+            document.getElementById('hudLeftName').textContent = leftName;
+            document.getElementById('panelLeftName').textContent = leftName;
+            document.getElementById('hudRightName').textContent = rightName;
+            document.getElementById('panelRightName').textContent = rightName;
+
+            // 若為 AI 模式，隱藏紅隊透視鏡與鍵盤提示
+            const rightHintBtn = document.getElementById('rightHintBtn');
+            const rightCtrlHint = document.getElementById('rightControlHint');
+            if (selectedBattleType === 'ai') {
+                rightHintBtn.classList.add('hidden');
+                rightCtrlHint.textContent = '🤖 AI 自動作答中';
+                rightCtrlHint.classList.remove('hidden');
+            } else {
+                rightHintBtn.classList.remove('hidden');
+                rightCtrlHint.textContent = '快捷鍵 [7-0]';
+            }
+
+            switchScreen('gameScreen');
+            updateTugArena();
+            assignNewTeamQuestion('left');
+            assignNewTeamQuestion('right');
+
+            if (selectedBattleType === 'ai') {
+                scheduleNextAiMove();
+            }
+        }
+
+        function restartTugGame() {
+            startTugGame(tugState.difficulty);
+        }
+
+        function showCallout(text) {
+            const el = document.getElementById('pullCallout');
+            el.textContent = text;
+            el.classList.remove('opacity-0');
+            el.classList.add('opacity-100');
+
+            clearTimeout(tugState.calloutTimeout);
+            tugState.calloutTimeout = setTimeout(() => {
+                el.classList.remove('opacity-100');
+                el.classList.add('opacity-0');
+            }, 1400);
+        }
+
+        function updateTugArena() {
+            // 移動 SVG 拔河繩索與隊伍位置 (-100..+100 對應 -310px..+310px)
+            const clampedPos = Math.max(-100, Math.min(100, tugState.ropePosition));
+            const translatePx = (clampedPos / 100) * 310;
+            document.getElementById('tugAssembly').style.transform = `translateX(${translatePx}px)`;
+
+            // 更新局勢文字
+            const statusEl = document.getElementById('tugStatusText');
+            if (clampedPos <= -65) {
+                statusEl.textContent = `🔥 ${tugState.left.name} 距離勝利線只差一步！`;
+                statusEl.className = 'text-[11px] sm:text-xs font-black text-cyan-300 mt-1';
+            } else if (clampedPos >= 65) {
+                statusEl.textContent = `🔥 ${tugState.right.name} 距離勝利線只差一步！`;
+                statusEl.className = 'text-[11px] sm:text-xs font-black text-rose-300 mt-1';
+            } else if (clampedPos < -10) {
+                statusEl.textContent = `🔵 ${tugState.left.name} 領先中 (${Math.abs(clampedPos)}%)`;
+                statusEl.className = 'text-[11px] sm:text-xs font-bold text-cyan-300 mt-1';
+            } else if (clampedPos > 10) {
+                statusEl.textContent = `🔴 ${tugState.right.name} 領先中 (${Math.abs(clampedPos)}%)`;
+                statusEl.className = 'text-[11px] sm:text-xs font-bold text-rose-300 mt-1';
+            } else {
+                statusEl.textContent = '⚖️ 勢均力敵！答對拉動能量繩！';
+                statusEl.className = 'text-[11px] sm:text-xs font-bold text-amber-300 mt-1';
+            }
+
+            // 更新兩隊答對數、連擊與透視鏡次數
+            ['left', 'right'].forEach(side => {
+                const team = tugState[side];
+                const capSide = side === 'left' ? 'Left' : 'Right';
+                document.getElementById(`hud${capSide}Correct`).textContent = team.correct;
+
+                const comboEl = document.getElementById(`hud${capSide}Combo`);
+                const panelEl = document.getElementById(`${side}TeamPanel`);
+                if (team.combo >= 2) {
+                    comboEl.classList.remove('hidden');
+                    comboEl.textContent = `🔥 ${team.combo}連擊`;
+                    panelEl.classList.add('fever-glow');
+                } else {
+                    comboEl.classList.add('hidden');
+                    panelEl.classList.remove('fever-glow');
+                }
+
+                const hintCountEl = document.getElementById(`${side}HintCount`);
+                const hintBtnEl = document.getElementById(`${side}HintBtn`);
+                if (hintCountEl) hintCountEl.textContent = team.hintsLeft;
+                if (hintBtnEl) hintBtnEl.disabled = team.hintsLeft <= 0 || team.stunned;
+            });
+        }
+
+        function assignNewTeamQuestion(side) {
+            if (tugState.isGameOver) return;
+
+            const team = tugState[side];
+            team.stunned = false;
+
+            const diff = tugState.difficulty === 'mixed'
+                ? pickRandom(['easy', 'medium', 'hard'])
+                : tugState.difficulty;
+
+            const q = generateQuestion(diff);
+            team.question = q;
+
+            // 隱藏提示框與冷卻覆蓋層
+            document.getElementById(`${side}HintBox`).classList.add('hidden');
+            document.getElementById(`${side}StunOverlay`).classList.add('hidden');
+            document.getElementById(`${side}QuestionText`).innerHTML = q.questionHtml;
+
+            const isAiRight = side === 'right' && tugState.battleType === 'ai';
+            const letters = ['A', 'B', 'C', 'D'];
+            const grid = document.getElementById(`${side}OptionsGrid`);
+
+            grid.innerHTML = q.options.map((opt, idx) => `
+                <button
+                    id="${side}Opt_${idx}"
+                    onclick="handleTeamAnswer('${side}', ${idx})"
+                    ${isAiRight ? 'disabled' : ''}
+                    class="option-btn w-full min-h-[54px] px-3 py-2.5 rounded-2xl bg-slate-950/90 border-2 border-slate-700/90 ${isAiRight ? 'opacity-85 cursor-default' : (side === 'left' ? 'hover:border-cyan-400' : 'hover:border-rose-400')} text-left flex items-center gap-2.5 group"
+                >
+                    <span class="w-7 h-7 rounded-lg bg-slate-800 ${!isAiRight ? (side === 'left' ? 'group-hover:bg-cyan-600' : 'group-hover:bg-rose-600') : ''} text-slate-300 group-hover:text-white font-black text-xs flex items-center justify-center shrink-0 transition">
+                        ${letters[idx]}
+                    </span>
+                    <span class="math-expr text-lg sm:text-xl font-bold text-white tracking-wide">
+                        ${opt.html}
+                    </span>
+                </button>
+            `).join('');
+
+            updateTugArena();
+        }
+
+        function useTeamHint(side) {
+            if (tugState.isGameOver) return;
+            const team = tugState[side];
+            if (team.hintsLeft <= 0 || team.stunned || !team.question) return;
+
+            team.hintsLeft -= 1;
+            sfx.playPowerup();
+
+            const q = team.question;
+            const hintBox = document.getElementById(`${side}HintBox`);
+            hintBox.classList.remove('hidden');
+            hintBox.innerHTML = `
+                🔍 <strong>${q.formulaInfo.name}：</strong>
+                <span class="math-expr text-cyan-300 font-bold">a = ${q.strA}</span>，
+                <span class="math-expr text-pink-300 font-bold">b = ${q.strB}</span>
+            `;
+            updateTugArena();
+        }
+
+        function handleTeamAnswer(side, selectedIndex, isAiAction = false) {
+            if (tugState.isGameOver) return;
+            if (side === 'right' && tugState.battleType === 'ai' && !isAiAction) return;
+
+            const team = tugState[side];
+            if (team.stunned || !team.question) return;
+
+            const q = team.question;
+            const chosenOpt = q.options[selectedIndex];
+            const isCorrect = chosenOpt.isCorrect;
+
+            // 暫時鎖定該隊按鈕防止連點
+            for (let i = 0; i < 4; i++) {
+                const btn = document.getElementById(`${side}Opt_${i}`);
+                if (btn) btn.disabled = true;
+            }
+
+            if (isCorrect) {
+                team.correct += 1;
+                team.combo += 1;
+                if (team.combo > team.maxCombo) {
+                    team.maxCombo = team.combo;
+                }
+
+                // 計算拉力強度（基礎 16，2連擊 +4，3連擊以上 +8）
+                const basePull = 16;
+                const bonusPull = team.combo >= 3 ? 8 : (team.combo === 2 ? 4 : 0);
+                const totalPull = basePull + bonusPull;
+
+                // 左隊往負方向拉 (-)，右隊往正方向拉 (+)
+                tugState.ropePosition += (side === 'left' ? -totalPull : totalPull);
+
+                sfx.playCorrect(team.combo);
+
+                // 觸發拔河角色發力動畫
+                const pullersEl = document.getElementById(side === 'left' ? 'leftPullersGroup' : 'rightPullersGroup');
+                const animClass = side === 'left' ? 'animate-pull-left' : 'animate-pull-right';
+                pullersEl.classList.remove(animClass);
+                void pullersEl.offsetWidth;
+                pullersEl.classList.add(animClass);
+
+                // 標示答對按鈕綠色
+                const chosenBtn = document.getElementById(`${side}Opt_${selectedIndex}`);
+                if (chosenBtn) {
+                    chosenBtn.classList.remove('border-slate-700/90');
+                    chosenBtn.classList.add('bg-emerald-950/90', 'border-emerald-400', 'animate-pop');
+                }
+
+                const icon = side === 'left' ? '🔵' : '🔴';
+                const comboTag = team.combo >= 3 ? '🔥 暴擊猛拉' : '答對拉動';
+                showCallout(`${icon} ${team.name} ${comboTag} +${totalPull}！`);
+
+                updateTugArena();
+
+                // 檢查是否已將能量繩拉過勝利線
+                if (tugState.ropePosition <= -100 || tugState.ropePosition >= 100) {
+                    setTimeout(() => endTugGame(), 380);
+                    return;
+                }
+
+                // 0.35 秒後自動派發該隊下一題，保持快節奏
+                setTimeout(() => {
+                    if (!tugState.isGameOver) {
+                        assignNewTeamQuestion(side);
+                    }
+                }, 350);
+
+            } else {
+                // 答錯：手滑讓繩子向對方滑動 8 單位，並進入 2.2 秒診斷冷卻
+                team.wrong += 1;
+                team.combo = 0;
+                team.stunned = true;
+
+                const slipForce = 8;
+                tugState.ropePosition += (side === 'left' ? slipForce : -slipForce);
+
+                sfx.playWrong();
+
+                // 記錄錯題供賽後全班檢討
+                tugState.mistakes.push({
+                    teamName: team.name,
+                    side,
+                    formulaName: q.formulaInfo.name,
+                    questionHtml: q.questionHtml,
+                    wrongHtml: chosenOpt.html,
+                    correctHtml: q.correctHtml,
+                    reason: chosenOpt.reason
+                });
+
+                const panelEl = document.getElementById(`${side}TeamPanel`);
+                panelEl.classList.remove('animate-shake');
+                void panelEl.offsetWidth;
+                panelEl.classList.add('animate-shake');
+
+                const icon = side === 'left' ? '🔵' : '🔴';
+                showCallout(`${icon} ${team.name} 手滑失誤！繩子倒退 −${slipForce}`);
+
+                // 顯示該隊的即時錯題診斷覆蓋層（使用 innerHTML 正確渲染代數變數斜體與上標）
+                document.getElementById(`${side}StunReason`).innerHTML = chosenOpt.reason;
+                document.getElementById(`${side}StunCorrect`).innerHTML = `正確展開：${q.correctHtml}`;
+                document.getElementById(`${side}StunOverlay`).classList.remove('hidden');
+
+                updateTugArena();
+
+                if (tugState.ropePosition <= -100 || tugState.ropePosition >= 100) {
+                    setTimeout(() => endTugGame(), 450);
+                    return;
+                }
+
+                // 2.2 秒後解除冷卻並派發新題
+                clearTimeout(team.stunTimer);
+                team.stunTimer = setTimeout(() => {
+                    if (!tugState.isGameOver) {
+                        assignNewTeamQuestion(side);
+                    }
+                }, 2200);
+            }
+        }
+
+        // AI 對手排程邏輯（單人挑戰模式）
+        function scheduleNextAiMove() {
+            if (tugState.isGameOver || tugState.battleType !== 'ai') return;
+
+            const delay = randInt(4600, 7400);
+            tugState.aiTimeout = setTimeout(() => {
+                if (tugState.isGameOver || tugState.battleType !== 'ai') return;
+
+                if (!tugState.right.stunned && tugState.right.question) {
+                    const q = tugState.right.question;
+                    const correctIdx = q.options.findIndex(o => o.isCorrect);
+                    // AI 約 80% 準確率，偶爾也會掉入陷阱
+                    if (Math.random() < 0.8) {
+                        handleTeamAnswer('right', correctIdx, true);
+                    } else {
+                        const wrongIndices = [0, 1, 2, 3].filter(i => i !== correctIdx);
+                        handleTeamAnswer('right', pickRandom(wrongIndices), true);
+                    }
+                }
+                scheduleNextAiMove();
+            }, delay);
+        }
+
+        function endTugGame() {
+            if (tugState.isGameOver) return;
+            tugState.isGameOver = true;
+            clearAllTimers();
+
+            switchScreen('resultScreen');
+
+            const pos = Math.max(-100, Math.min(100, tugState.ropePosition));
+            const leftWon = pos < 0;
+            const rightWon = pos > 0;
+
+            const iconEl = document.getElementById('winnerIcon');
+            const titleEl = document.getElementById('winnerTitle');
+            const subEl = document.getElementById('winnerSubtitle');
+
+            if (leftWon) {
+                iconEl.textContent = '🏆';
+                iconEl.className = 'w-20 h-20 rounded-2xl bg-gradient-to-br from-cyan-400 to-blue-600 text-white font-black text-5xl flex items-center justify-center shadow-xl shadow-cyan-500/30 animate-float';
+                titleEl.textContent = `🔵 ${tugState.left.name} 拔河獲勝！`;
+                titleEl.className = 'text-2xl sm:text-4xl font-black text-cyan-300 mt-3';
+                subEl.textContent = `勢如破竹！成功將能量繩拉過 ${tugState.left.name} 勝利線！`;
+            } else if (rightWon) {
+                iconEl.textContent = '🏆';
+                iconEl.className = 'w-20 h-20 rounded-2xl bg-gradient-to-br from-rose-400 to-red-600 text-white font-black text-5xl flex items-center justify-center shadow-xl shadow-rose-500/30 animate-float';
+                titleEl.textContent = `🔴 ${tugState.right.name} 拔河獲勝！`;
+                titleEl.className = 'text-2xl sm:text-4xl font-black text-rose-300 mt-3';
+                subEl.textContent = `勢如破竹！成功將能量繩拉過 ${tugState.right.name} 勝利線！`;
+            } else {
+                iconEl.textContent = '🤝';
+                titleEl.textContent = '雙方勢均力敵，平分秋色！';
+                titleEl.className = 'text-2xl sm:text-4xl font-black text-amber-300 mt-3';
+                subEl.textContent = '兩隊實力不相上下，再來一局分高下吧！';
+            }
+
+            // 更新最終旗幟位置條 (pos: -100..+100 -> left: 0%..100%)
+            document.getElementById('resLeftLabel').textContent = `🔵 ${tugState.left.name}勝利線`;
+            document.getElementById('resRightLabel').textContent = `🔴 ${tugState.right.name}勝利線`;
+            const pct = ((pos + 100) / 200) * 100;
+            document.getElementById('resFlagMarker').style.left = `${pct}%`;
+
+            // 填充左右兩隊數據
+            ['left', 'right'].forEach(side => {
+                const t = tugState[side];
+                const cap = side === 'left' ? 'Left' : 'Right';
+                const icon = side === 'left' ? '🔵' : '🔴';
+                const total = t.correct + t.wrong;
+                const acc = total > 0 ? Math.round((t.correct / total) * 100) : 0;
+
+                document.getElementById(`stat${cap}Title`).textContent = `${icon} ${t.name} 戰績`;
+                document.getElementById(`stat${cap}Acc`).textContent = `準確率 ${acc}%`;
+                document.getElementById(`stat${cap}Correct`).textContent = `${t.correct} 題`;
+                document.getElementById(`stat${cap}Combo`).textContent = `${t.maxCombo} 連擊`;
+                document.getElementById(`stat${cap}Wrong`).textContent = `${t.wrong} 次`;
+            });
+
+            // 渲染本局錯題筆記
+            const mistakeSection = document.getElementById('mistakeReviewSection');
+            const mistakeList = document.getElementById('mistakeList');
+
+            if (tugState.mistakes.length > 0) {
+                mistakeSection.classList.remove('hidden');
+                mistakeList.innerHTML = tugState.mistakes.map((m, idx) => {
+                    const badgeStyle = m.side === 'left'
+                        ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/30'
+                        : 'bg-rose-500/20 text-rose-300 border border-rose-500/30';
+                    const teamIcon = m.side === 'left' ? '🔵' : '🔴';
+                    return `
+                        <div class="rounded-2xl bg-slate-950/80 border border-slate-800 p-4 space-y-2">
+                            <div class="flex flex-wrap items-center justify-between gap-2">
+                                <span class="text-xs font-bold px-2.5 py-0.5 rounded-md ${badgeStyle}">
+                                    ${teamIcon} ${m.teamName} · ${m.formulaName}
+                                </span>
+                                <span class="math-expr text-base sm:text-lg font-bold text-white">題目：${m.questionHtml}</span>
+                            </div>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs sm:text-sm math-expr">
+                                <div class="p-2 rounded-xl bg-rose-950/40 border border-rose-500/30 text-rose-300">
+                                    ❌ 誤選：${m.wrongHtml}
+                                </div>
+                                <div class="p-2 rounded-xl bg-emerald-950/40 border border-emerald-500/30 text-emerald-300">
+                                    ✅ 正解：${m.correctHtml}
+                                </div>
+                            </div>
+                            <p class="text-xs text-amber-200/90 leading-relaxed">
+                                💡 <strong>關鍵提醒：</strong>${m.reason}
+                            </p>
+                        </div>
+                    `;
+                }).join('');
+            } else {
+                mistakeSection.classList.add('hidden');
+            }
+        }
+
+        // 支援雙人鍵盤對戰：左隊 [1-4 / Q-R]，右隊 [7-0 / U-P]
+        document.addEventListener('keydown', (e) => {
+            if (document.getElementById('gameScreen').classList.contains('hidden')) return;
+            if (!document.getElementById('formulaModal').classList.contains('hidden')) return;
+            if (tugState.isGameOver) return;
+
+            const key = e.key.toUpperCase();
+            const leftMap = { '1': 0, '2': 1, '3': 2, '4': 3, 'Q': 0, 'W': 1, 'E': 2, 'R': 3 };
+            const rightMap = { '7': 0, '8': 1, '9': 2, '0': 3, 'U': 0, 'I': 1, 'O': 2, 'P': 3 };
+
+            if (key in leftMap) {
+                const btn = document.getElementById(`leftOpt_${leftMap[key]}`);
+                if (btn && !btn.disabled) handleTeamAnswer('left', leftMap[key]);
+            } else if (key in rightMap && tugState.battleType === 'pvp') {
+                const btn = document.getElementById(`rightOpt_${rightMap[key]}`);
+                if (btn && !btn.disabled) handleTeamAnswer('right', rightMap[key]);
+            }
+        });
+    </script>
+</body>
+</html>
